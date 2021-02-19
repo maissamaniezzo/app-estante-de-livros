@@ -23,17 +23,13 @@
 # Flutter/Dart/Pub related
 **/doc/api/
 **/ios/Flutter/.last_build_id
-*.lock
 .dart_tool/
 .flutter-plugins
 .flutter-plugins-dependencies
-.metadata
 .packages
 .pub-cache/
 .pub/
-/android/
 /build/
-/ios/
 
 # Web related
 lib/generated_plugin_registrant.dart

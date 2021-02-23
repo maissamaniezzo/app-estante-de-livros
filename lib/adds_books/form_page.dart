@@ -13,22 +13,24 @@ class FormPage extends StatefulWidget {
 
 class _FormPageState extends State<FormPage> {
 
-  final nameController = TextEditingController();
-  final authorController = TextEditingController();
-  final pagesController = TextEditingController();
-  final publisherController = TextEditingController();
+  String nameController;
+  String authorController;
+  String pagesController;
+  String publisherController;
   final image = null;
   DateTime initialDate = DateTime.now();
   DateTime finalDate = DateTime.now(); 
 
   _submitForm() {
-    final name = nameController.text;
-    final author = authorController.text;
-    final pages = pagesController.text;
-    final pubComp = publisherController.text;
+    final name = nameController;
+    final author = authorController;
+    final pages = pagesController;
+    final pubComp = publisherController;
 
-    if(name.isEmpty || author.isEmpty || pages.isEmpty || pubComp.isEmpty || initialDate == null || finalDate == null) {
-      print("algum campo vazio");
+    print("name = $name");
+    print("author = $author");
+
+    if(name == null || author == null || pages == null || pubComp == null || initialDate == null || finalDate == null) {
       return;
     }
 
@@ -46,12 +48,10 @@ class _FormPageState extends State<FormPage> {
         print("pickedDate = null");
         return;
       }
-
-      print("pickedDate1 $pickedDate");
+      
       setState(() {
         initialDate = pickedDate;
       });
-      print("initialDate $initialDate");
 
     });
   }
@@ -67,11 +67,9 @@ class _FormPageState extends State<FormPage> {
         return;
       }
 
-      print("pickedDate2 $pickedDate");
       setState(() {
         finalDate = pickedDate;
       });
-      print("finalDate $finalDate");
 
     });
   }
@@ -88,45 +86,61 @@ class _FormPageState extends State<FormPage> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextField(
-                controller: nameController,
-                onSubmitted: _submitForm(),
+                //controller: nameController,
                 decoration: InputDecoration(
                   labelText: "Título",
                   labelStyle: TextStyle(color: Colors.grey),
                 ),
+                onSubmitted: (text) {
+                  setState(() {
+                    nameController = text;
+                  });
+                },
               ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextField(
-                controller: authorController,
-                onSubmitted: _submitForm(),
+                //controller: authorController,
                 decoration: InputDecoration(
                   labelText: "Autor",
                   labelStyle: TextStyle(color: Colors.grey),
                 ),
+                onSubmitted: (text) {
+                  setState(() {
+                    authorController = text;
+                  });
+                },
               ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextField(
-                controller: pagesController,
-                onSubmitted: _submitForm(),
+                // controller: pagesController,
                 decoration: InputDecoration(
                   labelText: "Número de paginas",
                   labelStyle: TextStyle(color: Colors.grey),
                 ),
+                onSubmitted: (text) {
+                  setState(() {
+                    pagesController = text;
+                  });
+                },
               ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextField(
-                controller: publisherController,
-                onSubmitted: _submitForm(),
+                // controller: publisherController,
                 decoration: InputDecoration(
                   labelText: "Editora",
                   labelStyle: TextStyle(color: Colors.grey),
                 ),
+                onSubmitted: (text) {
+                  setState(() {
+                    publisherController = text;
+                  });
+                },
               ),
             ),
             Padding(

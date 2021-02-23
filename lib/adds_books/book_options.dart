@@ -187,7 +187,7 @@ class _BookOptionsState extends State<BookOptions> {
       );
   }
 
-  _submitFoundBook(AsyncSnapshot snapshot, int i) {
+  _submitFoundBook(AsyncSnapshot snapshot, int i) async {
     final name = snapshot.data["items"][i]["volumeInfo"]["title"];
 
     final String author = authorExist(snapshot, i);
@@ -198,9 +198,9 @@ class _BookOptionsState extends State<BookOptions> {
 
     final image = thumbnailExist(snapshot, i);
 
-    _showDatePickerInitial(context);
+    await _showDatePickerInitial(context);
     
-    _showDatePickerFinal(context);
+    await _showDatePickerFinal(context);
 
     if(name.isEmpty || author.isEmpty || pages.isEmpty || pubComp.isEmpty || initialDate == null || finalDate == null) {
       return;
@@ -238,40 +238,39 @@ class _BookOptionsState extends State<BookOptions> {
       return snapshot.data["items"][i]["volumeInfo"]["imageLinks"]["thumbnail"];
   }
 
-  _showDatePickerInitial(BuildContext context) {
-    showDatePicker(
+  _showDatePickerInitial(BuildContext context) async {
+    final DateTime pickedDate = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
       firstDate: DateTime(2019),
       lastDate: DateTime.now(),
-    ).then((pickedDate) {
-      if(pickedDate == null) {
-        print("pickedDate = null");
-        return;
-      }
+      helpText: 'Data do início da leitura',
+    );
 
-      setState(() {
-        initialDate = pickedDate;
-      });
+    if(pickedDate == null) {
+      return;
+    }
 
+    setState(() {
+      initialDate = pickedDate;
     });
   }
 
-  _showDatePickerFinal(BuildContext context) {
-    showDatePicker(
+  _showDatePickerFinal(BuildContext context) async {
+    final DateTime pickedDate = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
       firstDate: DateTime(2019),
       lastDate: DateTime.now(),
-    ).then((pickedDate) {
-      if(pickedDate == null) {
-        return;
-      }
+      helpText: 'Data do fim da leitura',
+    );
 
-      setState(() {
-        finalDate = pickedDate;
-      });
+    if(pickedDate == null) {
+      return;
+    }
 
+    setState(() {
+      finalDate = pickedDate;
     });
   }
 
